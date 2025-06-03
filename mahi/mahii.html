@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Happy Birthday mahi</title>
+<style>
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+  }
+  body, html {
+    width: 100%; height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #000;
+    color: #fff;
+    overflow-x: hidden;
+  }
+  #app {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #intro1 {
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+  #sound-note {
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    font-size: 0.9rem;
+    color: #ccc;
+    user-select: none;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div id="intro1"></div>
+</div>
+<div id="sound-note">double click for sound</div>
+
+<audio id="bg-music" loop>
+  <source src="music/14. White Ferrari.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+  const intro1 = document.getElementById('intro1');
+  const bgMusic = document.getElementById('bg-music');
+  
+  const messages = [
+    "wassup",
+    "Today is your day keshtt",
+    "22 with no kids ?",
+    "HAPPY BIRTHDAY MAHIIII :) ",
+    "I HOPE 22 TREATS YOU GOOD KESHTT",
+    "got summ for youu"
+  ];
+
+  let i = 0;
+  const displayTime = 3500; // 3.5 seconds message visible
+  const fadeTime = 700; // fade in/out duration
+  
+  function showMessage() {
+    if(i >= messages.length) {
+      // After last message, redirect to tv room
+      window.location.href = 'slideshow.html';
+      return;
+    }
+    intro1.textContent = messages[i];
+    intro1.style.opacity = 1;
+    setTimeout(() => {
+      intro1.style.opacity = 0;
+      setTimeout(() => {
+        i++;
+        showMessage();
+      }, fadeTime);
+    }, displayTime);
+  }
+
+  // Start playing music on first user interaction
+  function startMusic() {
+    if(bgMusic.paused) {
+      bgMusic.play().catch(e => console.log('Autoplay prevented:', e));
+    }
+    // Remove event listeners after first interaction
+    window.removeEventListener('click', startMusic);
+    window.removeEventListener('dblclick', startMusic);
+  }
+  window.addEventListener('click', startMusic);
+  window.addEventListener('dblclick', startMusic);
+
+  // Start the message cycle
+  showMessage();
+</script>
+<script>
+const bgMusic = document.getElementById('bg-music');
+
+bgMusic.addEventListener('timeupdate', () => {
+  sessionStorage.setItem('bgMusicTime', bgMusic.currentTime);
+  sessionStorage.setItem('bgMusicPlaying', !bgMusic.paused);
+})
+</script>
+<!-- Page 1 -->
+
+  <div id="transition" style="opacity: 0; transition: opacity 1s; background:black; position:fixed; top:0;left:0;right:0;bottom:0; z-index:9999;"></div>
+  <button onclick="goToPage()">Next Page</button>
+
+  <script>
+    function goToPage() {
+      const trans = document.getElementById('transition');
+      trans.style.opacity = 1;
+      setTimeout(() => {
+        window.location.href = 'slideshow.html';
+      }, 1000); // wait for transition
+    }
+  </script>
+
+
+</body>
+</html>

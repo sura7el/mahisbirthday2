@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>picssss</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: sans-serif;
+      color: white;
+    }
+.balloon-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.balloon {
+  position: absolute;
+  bottom: -100px;
+  width: 40px;
+  height: 60px;
+  background: radial-gradient(circle at 30% 30%, #ff69b4, #d60073);
+  border-radius: 50% 50% 45% 45%;
+  animation: floatUp 10s infinite ease-in;
+  opacity: 0.8;
+  box-shadow: inset -4px -4px 10px rgba(255,255,255,0.3);
+}
+
+.balloon::after {
+  content: "";
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  width: 2px;
+  height: 20px;
+  background: #fff;
+  transform: translateX(-50%);
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-120vh);
+    opacity: 0;
+  }
+}
+  .slideshow-container {
+  position: relative;
+  width: 70vw;
+  height: 90vh;
+  max-width: 960px;
+  max-height: 1280px;
+  ...
+}
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* scales to fill without distortion */
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+    .slide.active {
+      opacity: 1;
+    }
+
+    .caption {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.5);
+      text-align: center;
+      font-size: 20px;
+      opacity: 0;
+      transition: opacity 0.8s;
+    }
+
+    .caption.active {
+      opacity: 1;
+    }
+
+    .controls, .nav-buttons {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: white;
+      color: black;
+      margin: 5px;
+    }
+
+    button:hover {
+      background-color: #ddd;
+    }
+
+    .arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.7);
+      border: none;
+      font-size: 30px;
+      padding: 10px 20px;
+      cursor: pointer;
+      z-index: 10;
+    }
+
+    .arrow:hover {
+      background: white;
+    }
+
+    .arrow.left {
+      left: 10px;
+    }
+
+    .arrow.right {
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <button id="startBtn">Start Slideshow</button>
+
+  <div class="slideshow-container" id="slideshow">
+    <!-- Slides and Captions -->
+    <img src="mahi phtotos/mahi2.jpg" class="slide active" />
+    <div class="caption active">Look at them big eyes man lmaooo :) hair still ate tho</div>
+
+    <img src="mahi phtotos/mahi6.jpg" class="slide" />
+    <div class="caption">look at that beauty</div>
+
+    <img src="mahi phtotos/mahi5.jpg" class="slide" />
+    <div class="caption">i used to beg for this picss every holiday lol</div>
+
+    <img src="mahi phtotos/mahi9.jpg" class="slide" />
+    <div class="caption">actor eyachawetesh neber yezi gize meslegn</div>
+
+    <img src="mahi phtotos/mahi8.jpg"class="slide" />
+    <div class="caption">do you remember this day? because i remember it like yesterday lol <br> me and eze made fun of you so much lmaooo</div>
+
+    <img src="mahi phtotos/mahi11.jpg" class="slide" />
+    <div class="caption">one of our best pics togetherrrrr </div>
+
+    <img src="mahi phtotos/mahi10.jpg" class="slide" />
+    <div class="caption">i lowkey ruined this pic ahhhhhhh wouldve been hella cute</div>
+    <img src="mahi phtotos/mahi4.jpg" class="slide" />
+    <div class="caption">one of the best days of mylife</div>
+
+    <img src="mahi phtotos/mahi7.jpg" class="slide" />
+    <div class="caption">amedam nebern yezin ken looool</div>
+
+    <img src="mahi phtotos/mahi3.jpg" class="slide" />
+    <div class="caption">goat yehone selfie</div>
+
+     <img src="mahi phtotos/mahi1.jpg" class="slide" />
+    <div class="caption">finally one of my fav pics of us,<br> Happy birthday kesht </div>
+
+    <!-- Arrow Buttons -->
+    <button class="arrow left" onclick="prevSlide()">&#10094;</button>
+    <button class="arrow right" onclick="nextSlide()">&#10095;</button>
+  </div>
+
+<div class="controls">
+  <button id="continueBtn" onclick="goNext()" style="display: none;">Get your flowers here Kesht</button>
+</div>
+  <audio id="bgMusic" loop>
+    <source src="music/14. White Ferrari 2.mp3" type="audio/mpeg" />
+    Your browser does not support the audio tag.
+  </audio>
+<div class="controls">
+  <button id="continueBtn" onclick="goNext()" style="display: none;">Get your flowers here Kesht</button>
+</div>
+ <script>
+  const slides = document.querySelectorAll(".slide");
+  const captions = document.querySelectorAll(".caption");
+  const startBtn = document.getElementById("startBtn");
+  const slideshow = document.getElementById("slideshow");
+  const continueBtn = document.getElementById("continueBtn");
+
+  let current = 0;
+  let slideshowInterval;
+
+  function showSlide(index) {
+    slides.forEach((s, i) => {
+      s.classList.remove("active");
+      captions[i].classList.remove("active");
+      if (i === index) {
+        s.classList.add("active");
+        captions[i].classList.add("active");
+      }
+    });
+
+    if (index === slides.length - 1) {
+      clearInterval(slideshowInterval);
+      continueBtn.style.display = "inline-block";
+    }
+  }
+
+  function nextSlide() {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+  }
+
+  function toggleMusic() {
+    const music = document.getElementById("bgMusic");
+    music.paused ? music.play() : music.pause();
+  }
+
+  function goNext() {
+    window.location.href = "flowers.html";
+  }
+
+  startBtn.addEventListener("click", () => {
+    startBtn.style.display = "none";
+    slideshow.style.display = "block";
+
+    // ✅ This line makes the music start automatically
+    document.getElementById("bgMusic").play();
+
+    slideshowInterval = setInterval(() => {
+      if (current < slides.length - 1) {
+        nextSlide();
+      } else {
+        clearInterval(slideshowInterval);
+        continueBtn.style.display = "inline-block";
+      }
+    }, 4000);
+  });
+</script>
+<div class="balloon-wrapper">
+  <div class="balloon" style="left: 10%; animation-delay: 0s;"></div>
+  <div class="balloon" style="left: 20%; animation-delay: 2s;"></div>
+  <div class="balloon" style="left: 30%; animation-delay: 4s;"></div>
+  <div class="balloon" style="right: 10%; animation-delay: 1s;"></div>
+  <div class="balloon" style="right: 20%; animation-delay: 3s;"></div>
+  <div class="balloon" style="right: 30%; animation-delay: 5s;"></div>
+</div>
+</html>
